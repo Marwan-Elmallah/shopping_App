@@ -6,6 +6,13 @@ const CryptoJS = require("crypto-js");
 class UserController {
     static async register(req, res) {
         const { name, email, password, level } = req.body
+        const usserExist = await User.findOne({ email })
+        if (usserExist) {
+            return res.status(409).json({
+                error: true,
+                message: 'User already exists'
+            })
+        }
         const encrypted = CryptoJS.AES.encrypt(password, process.env.SECRET_KEY_ENCRYPT).toString();
         const user = await User.create({ name, email, password: encrypted, level })
         return res.status(201).json({
@@ -52,6 +59,15 @@ class UserController {
             error: false,
             message: 'User found successfully',
             user
+        })
+    }
+
+    static async deleteUser(req, res) {
+        const { id } = req.params
+        const user = await User.findByIdAndDelete(id)
+        return res.status(200).json({
+            error: false,
+            message: 'User deleted successfully'
         })
     }
 

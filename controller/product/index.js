@@ -17,7 +17,15 @@ class ProductController {
     }
 
     static async createProduct(req, res) {
-        const { name, price, image, description } = req.body
+        const { name, price, description } = req.body
+        console.log(req.file);
+        if (!req.file) {
+            return res.status(400).json({
+                error: true,
+                message: 'Image is required'
+            })
+        }
+        const image = `${req.protocol}://${req.get('host')}/image/${req.file.filename}`
         const product = await Product.create({ name, price, image, description })
         return res.status(201).json({
             error: false,

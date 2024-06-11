@@ -12,7 +12,7 @@ const port = process.env.PORT
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+app.use("/image", express.static('public'))
 app.use("/", allRouter)
 
 
