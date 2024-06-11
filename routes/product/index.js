@@ -4,7 +4,7 @@ const { uploadImage } = require('../../middleware/uploadImage')
 
 
 router.get("/", ProductController.getProduct)
-router.post("/", uploadImage, ProductController.createProduct)
+router.post("/", ProductController.createProduct)
 router.put("/:id", ProductController.updateProduct)
 router.delete("/:id", ProductController.deleteProduct)
 
