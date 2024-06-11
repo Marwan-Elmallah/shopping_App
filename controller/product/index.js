@@ -18,7 +18,6 @@ class ProductController {
 
     static async createProduct(req, res) {
         const { name, price, description } = req.body
-        console.log(req.file);
         if (!req.file) {
             return res.status(400).json({
                 error: true,
